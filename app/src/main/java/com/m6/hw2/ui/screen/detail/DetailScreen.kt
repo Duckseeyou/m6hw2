@@ -1,5 +1,4 @@
 package com.m6.hw2.ui.screen.detail
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -46,7 +45,8 @@ fun DetailScreen(navController: CustomNavController, book: BookModel) {
             )
             Column(
                 modifier = Modifier
-                    .width(200.dp)
+                    .width(200.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 GlideImage(
                     model = book.imageUrl,
