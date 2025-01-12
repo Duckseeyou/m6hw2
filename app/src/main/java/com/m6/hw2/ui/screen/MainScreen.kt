@@ -113,10 +113,52 @@ fun MainScreen(navController: CustomNavController) {
                 "https://static.insales-cdn.com/r/g_t4KC_o-4g/rs:fit:1000:0:1/q:100/plain/images/products/1/4725/660910709/1.jpeg@jpeg"
             )
         )
+        val scienceFictionBooksList = listOf(
+            BookModel(
+                "Игра Эндера",
+                "Орсон Скотт Кард",
+                "Научно-фантастический роман о талантливом мальчике, которого готовят к войне против инопланетной расы. В центре сюжета — стратегические игры, испытания и моральные дилеммы.",
+                "https://booqua.de/images/product_gallery/851653454385_525875.jpg"
+            ),
+            BookModel(
+                "Дюна",
+                "Фрэнк Герберт",
+                "Эпическая сага, действие которой разворачивается на планете Арракис, единственном источнике самого ценного вещества во вселенной — пряности. Пол Атрейдес вступает на путь своего предназначения, который изменит судьбу галактики.",
+                "https://imo10.labirint.ru/books/741877/cover.jpg/242-0"
+            ),
+            BookModel(
+                "Марсианин",
+                "Энди Вейер",
+                "Роман о выживании астронавта Марка Уотни, оказавшегося в одиночестве на Марсе. История о находчивости, науке и борьбе за жизнь на чужой планете.",
+                "https://static.insales-cdn.com/r/JQdD7fBkYhs/rs:fit:1000:0:1/q:100/plain/images/products/1/7132/579771356/cover1__w6008772a5801b67bf17.jpg@jpg"
+            )
+        )
+        val horrorBooksList = listOf(
+            BookModel(
+                "Сияние",
+                "Стивен Кинг",
+                "История Джека Торренса, который устраивается на работу смотрителем в отеле «Оверлук». Но вместе с его семьёй отель начинает раскрывать свои мрачные тайны и оборачивается кошмаром.",
+                "https://globus-online.kg/upload/iblock/0fe/0fe00a663c3cb1e79fa428b767c58bda.png"
+            ),
+            BookModel(
+                "Дракула",
+                "Брэм Стокер",
+                "Классический роман об охоте на графа Дракулу — могущественного вампира, который пытается перебраться из Трансильвании в Англию, чтобы обрести новые жертвы.",
+                "https://imo10.labirint.ru/books/830269/cover.jpg/484-0"
+            ),
+            BookModel(
+                "Призрак дома на холме",
+                "Ширли Джексон",
+                "История о группе людей, которые приезжают в старинный особняк, чтобы исследовать паранормальные явления, но сталкиваются с ужасом, выходящим за пределы понимания.",
+                "https://imo10.labirint.ru/books/733574/cover.jpg/484-0"
+            )
+        )
         val genresList = listOf(
             "Детективы" to detectiveBookList,
             "Классика" to classicsBooksList,
-            "Романтика" to romanticBooksList
+            "Романтика" to romanticBooksList,
+            "Фантастика" to scienceFictionBooksList,
+            "Ужасы" to horrorBooksList
         )
 
         CenterAlignedTopAppBar(
@@ -135,7 +177,7 @@ fun MainScreen(navController: CustomNavController) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 16.dp, top = 16.dp),
+                .padding(start = 16.dp, top = 16.dp, bottom = 36.dp),
         ) {
             items(
                 items = genresList
@@ -146,6 +188,14 @@ fun MainScreen(navController: CustomNavController) {
                     modifier = Modifier
                         .padding(top = 24.dp)
                 )
+                if (filterBooks(books, searchQuery.value).isEmpty()) {
+                    Text(
+                        text = "К сожалению, ничего не найдено...",
+                        fontSize = 16.sp,
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                    )
+                }
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -180,16 +230,17 @@ fun SearchView(
     )
 }
 fun filterBooks(books: List<BookModel>, query: String): List<BookModel> {
-    return books.filter {
+    val filteredBooks = books.filter {
         it.title.contains(query, true) || it.author.contains(query, true)
     }
+    return filteredBooks
 }
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun BookItem(book: BookModel, onClick: () -> Unit) {
     Row(
         modifier = Modifier
-            .padding(end = 20.dp)
+            .padding(end = 24.dp)
     ) {
         Column(
             modifier = Modifier

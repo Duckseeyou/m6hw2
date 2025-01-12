@@ -74,7 +74,7 @@ fun DetailScreen(navController: CustomNavController, book: BookModel) {
                     .verticalScroll(
                         rememberScrollState()
                     )
-                    .padding(bottom = 24.dp)
+                    .padding(bottom = 24.dp, end = 16.dp)
             )
         }
     }
